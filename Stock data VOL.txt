@@ -1,0 +1,32 @@
+Sub year_stock_vol()
+For Each ws in Worksheets
+  Dim TickerL As String
+  Dim Total_vol As Double
+  Total_vol = 0
+  Dim Summary_Table_Row As Integer
+  Summary_Table_Row = 2
+  Dim LastRow as Long
+  LastRow = ws.Cells(Rows.Count, 1).End(xlUp).Row
+
+  For i = 2 To LastRow
+
+    If ws.Cells(i + 1, 1).Value <> ws.Cells(i, 1).Value Then
+      TickerL = ws.Cells(i, 1).Value
+      Total_vol = Total_vol + ws.Cells(i, 7).Value
+
+      ws.Range("I" & Summary_Table_Row).Value = TickerL
+      ws.Range("J" & Summary_Table_Row).Value = Total_vol
+
+      Summary_Table_Row = Summary_Table_Row + 1
+      Total_vol = 0
+
+    Else
+      Total_vol = Total_vol + ws.Cells(i, 7).Value
+
+    End If
+  Next i
+  ws.Cells(1, 9).Value = "TickerL"
+  ws.Cells(1, 10).Value = "TOTAL VOL"
+
+  Next ws
+End Sub
